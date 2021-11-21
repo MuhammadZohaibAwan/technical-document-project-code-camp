@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width; initial-scale=1.0">
+  <title>JavaScript | Grammar and Types</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="main-doc">
+    <nav id="navbar">
+      <header>Grammar and Types</header>
+      <ul>
+        <li><a href="#Introduction" class="nav-link">Introduction</a></li>
+        <li><a href="#Basics" class="nav-link">Basics</a></li>
+        <li><a href="#Comments" class="nav-link">Comments</a></li>
+        <li><a href="#Declarations" class="nav-link">Declarations</a></li>
+        <li><a href="#Data_Structures_and_Types" class="nav-link">Data Structures and Types</a></li>
+        <li><a href="#Literals" class="nav-link">Literals</a></li>
+        <li><a href="#Reference" class="nav-link">Reference</a></li>
+      </ul>
+    </nav>
+    <h1>Grammar and Types</h1>
+    <section class="main-section" id="Introduction">
+      <header>Introduction</header>
+      <p>This document discusses JavaScript's basic grammar, variable declarations, data types and literals.</p>
+    <section class="main-section" id="Basics">
+      <header>Basics</header>
+      <p>JavaScript borrows most of its syntax from Java, but is also influenced by Awk, Perl and Python.</p>
+      <p>JavaScript is <strong>case-sensitive</strong> and uses the <strong>Unicode</strong> character set.</p>
+      <p>In JavaScript, instructions are called statements and are separated by a semicolon (;). Spaces, tabs and newline characters are called whitespace. The source text of JavaScript scripts gets scanned from left to right and is converted into a sequence of input elements which are tokens, control characters, line terminators, comments or whitespace. ECMAScript also defines certain keywords and literals and has rules for automatic insertion of semicolons (ASI) to end statements. However, it is recommended to always add semicolons to end your statements; it will avoid side effects. For more information, see the detailed reference about JavaScript's lexical grammar.</p>
+    </section>
+    <section class="main-section" id="Comments">
+      <header>Comments</header>
+      <p>The syntax of comments is the same as in C++ and in many other languages:</p>
+      <pre><code>// a one line comment</code>
+  <code></code>
+  <code>/* this is a longer,</code>
+  <code>   multi-line comment</code>
+  <code> */</code>
+  <code></code>
+  <code>/* You can't, however, /* nest comments */ SyntaxError */</code></pre>
+    </section>
+    <section class="main-section" id="Declarations">
+      <header>Declarations</header>
+      <p>There are three kinds of declarations in JavaScript.</p>
+      <dl>
+        <dt><code>var</code></dt>
+        <dd>Declares a variable, optionally initializing it to a value.</dd>
+        <dt><code>let</code></dt>
+        <dd>Declares a block scope local variable, optionally initializing it to a value.</dd>
+        <dt><code>const</code></dt>
+        <dd>Declares a read-only named constant.</dd>
+      </dl>
+      <h2>Variables</h2>
+      <p>You use variables as symbolic names for values in your application. The names of variables, called identifiers, conform to certain rules.</p>
+      <p>A JavaScript identifier must start with a letter, underscore (_), or dollar sign ($); subsequent characters can also be digits (0-9). Because JavaScript is case sensitive, letters include the characters "A" through "Z" (uppercase) and the characters "a" through "z" (lowercase).</p>
+      <p>You can use most of ISO 8859-1 or Unicode letters such as å and ü in identifiers (for more details see this blog post). You can also use the Unicode escape sequences as characters in identifiers.</p>
+      <p>Some examples of legal names are Number_hits, temp99, $credit, and _name</p>
+      <h2>Declaring Variables</h2>
+      <p>You can declare a variable in three ways:</p>
+      <ul>
+        <li>With the keyword <code>var</code>. For example, <code>var x = 42</code>. This syntax can be used to declare both local and global variables.</li>
+        <li>By simply assigning it a value. For example, <code>x = 42</code>. This always declares a global variable, if it is declared outside of any function. It generates a strict JavaScript warning. You shouldn't use this variant.</li>
+        <li>With the keyword <code>let</code>. For example, <code>let y = 13</code>. This syntax can be used to declare a block scope local variable. See Variable scope below.</li>
+      </ul>
+      <h2>Evaluating Variables</h2>
+      <p>A variable declared using the <code>var</code> or <code>let</code> statement with no initial value specified has the value <code>undefined</code>.</p>
+        <p>An attempt to access an undeclared variable will result in a <code>ReferenceError</code> exception being thrown:</p>
+        <pre><code>var a;</code>
+  <code>console.log('The value of a is ' + a); // The value of a is undefined</code>
+  <code></code>
+  <code>var b;</code>
+  <code>console.log('The value of b is ' + b); // The value of b is undefined</code>
+  <code></code>
+  <code>console.log('The value of c is ' + c); // Uncaught ReferenceError: c is not defined</code>
+  <code></code>
+  <code>let x;</code>
+  <code>console.log('The value of x is ' + x); // The value of x is undefined</code>
+  <code></code>
+  <code>console.log('The value of y is ' + y); // Uncaught ReferenceError: y is not defined</code>
+  <code>let y;</code></pre>
+        <p>You can use undefined to determine whether a variable has a value. In the following code, the variable input is not assigned a value, and the if statement evaluates to true.</p>
+        <pre><code>var input;</code>
+  <code>if (input === undefined) {</code>
+  <code>  doThis();</code>
+  <code>} else {</code>
+  <code>  doThat();</code>
+  <code>}</code></pre>
+        <p>The undefined value behaves as false when used in a boolean context. For example, the following code executes the function myFunction because the myArray element is undefined:</p>
+        <pre><code>var myArray = [];</code>
+  <code>if (!myArray[0]) myFunction();</code></pre>
+        <p>The undefined value converts to NaN when used in numeric context.</p>
+        <pre><code>var a;</code>
+  <code>a + 2;  // Evaluates to NaN</code></pre>
+        <p>When you evaluate a null variable, the null value behaves as 0 in numeric contexts and as false in boolean contexts. For example:</p>
+        <pre><code>var n = null;</code>
+  <code>console.log(n * 32); // Will log 0 to the console</code></pre>
+        <h2>Variable Scope</h2>
+        <p>When you declare a variable outside of any function, it is called a global variable, because it is available to any other code in the current document. When you declare a variable within a function, it is called a local variable, because it is available only within that function.</p>
+        <p>JavaScript before ECMAScript 2015 does not have block statement scope; rather, a variable declared within a block is local to the function (or global scope) that the block resides within. For example the following code will log 5, because the scope of x is the function (or global context) within which x is declared, not the block, which in this case is an if statement.</p>
+        <pre><code>if (true) {</code>
+  <code>  var x = 5;</code>
+  <code>}</code>
+  <code>console.log(x);  // x is 5</code></pre>
+        <p>This behavior changes, when using the let declaration introduced in ECMAScript 2015.</p>
+        <pre><code>if (true) {</code>
+  <code>  let y = 5;</code>
+  <code>}</code>
+  <code>console.log(y);  // ReferenceError: y is not defined</code></pre>
+        <h2>Variable Hoisting</h2>
+        <p>Another unusual thing about variables in JavaScript is that you can refer to a variable declared later, without getting an exception. This concept is known as hoisting; variables in JavaScript are in a sense "hoisted" or lifted to the top of the function or statement. However, variables that are hoisted will return a value of undefined. So even if you declare and initialize after you use or refer to this variable, it will still return undefined.</p>
+        <pre><code>/**</code>
+  <code> * Example 1</code>
+  <code> */</code>
+  <code>console.log(x === undefined); // true</code>
+  <code>var x = 3;</code>
+  <code></code>
+  <code>/**</code>
+  <code> * Example 2</code>
+  <code> */</code>
+  <code>// will return a value of undefined</code>
+  <code>var myvar = 'my value';</code>
+  <code></code>
+  <code>(function() {</code>
+  <code>  console.log(myvar); // undefined</code>
+  <code>  var myvar = 'local value';</code>
+  <code>})();</code></pre>
+        <p>The above examples will be interpreted the same as:</p>
+        <pre><code>/**</code>
+  <code> * Example 1</code>
+  <code> */</code>
+  <code>var x;</code>
+  <code>console.log(x === undefined); // true</code>
+  <code>x = 3;</code>
+  <code></code>
+  <code>/**</code>
+  <code> * Example 2</code>
+  <code> */</code>
+  <code>var myvar = 'my value';</code>
+  <code></code>
+  <code>(function() {</code>
+  <code>  var myvar;</code>
+  <code>  console.log(myvar); // undefined</code>
+  <code>  myvar = 'local value';</code>
+  <code>})();</code></pre>
+      <p>Because of hoisting, all var statements in a function should be placed as near to the top of the function as possible. This best practice increases the clarity of the code.</p>
+      <p>In ECMAScript 2015, <code>let</code> (<code>const</code>) <strong>will not hoist</strong> the variable to the top of the block. However, referencing the variable in the block before the variable declaration results in a <code>ReferenceError</code>. The variable is in a "temporal dead zone" from the start of the block until the declaration is processed.</p>
+      <pre><code>console.log(x); // ReferenceError</code>
+  <code>let x = 3;</code></pre>
+      <h2>Function Hoisting</h2>
+      <p>For functions, only function declaration gets hoisted to the top and not the function expression.</p>
+      <pre><code>/* Function declaration */</code>
+  <code></code>
+  <code>foo(); // "bar"</code>
+  <code></code>
+  <code>function foo() {</code>
+  <code>  console.log('bar');</code>
+  <code>}</code>
+  <code></code>
+  <code></code>
+  <code>/* Function expression */</code>
+  <code></code>
+  <code>baz(); // TypeError: baz is not a function</code>
+  <code></code>
+  <code>var baz = function() {</code>
+  <code>  console.log('bar2');</code>
+  <code>};</code></pre>
+      <h2>Global Variables</h2>
+      <p>Global variables are in fact properties of the global object. In web pages the global object is window, so you can set and access global variables using the <code>window.variable</code> syntax.</p>
+      <p>Consequently, you can access global variables declared in one window or frame from another window or frame by specifying the window or frame name. For example, if a variable called <code>phoneNumber</code> is declared in a document, you can refer to this variable from an iframe as <code>parent.phoneNumber</code>.</p>
+      <h2>Constants</h2>
+      <p>You can create a read-only, named constant with the <code>const</code> keyword. The syntax of a constant identifier is the same as for a variable identifier: it must start with a letter, underscore or dollar sign ($) and can contain alphabetic, numeric, or underscore characters.</p>
+      <pre><code>const PI = 3.14;</code></pre>
+      <p>A constant cannot change value through assignment or be re-declared while the script is running. It has to be initialized to a value.</p>
+      <p>The scope rules for constants are the same as those for <code>let</code> block scope variables. If the <code>const</code> keyword is omitted, the identifier is assumed to represent a variable.</p>
+      <p>You cannot declare a constant with the same name as a function or variable in the same scope. For example:</p>
+      <pre><code>// THIS WILL CAUSE AN ERROR</code>
+  <code>function f() {};</code>
+  <code>const f = 5;</code>
+  <code></code>
+  <code>// THIS WILL CAUSE AN ERROR ALSO</code>
+  <code>function f() {</code>
+  <code>  const g = 5;</code>
+  <code>  var g;</code>
+  <code></code>
+  <code>  //statements</code>
+  <code>}</code></pre>
+      <p>However, the properties of objects assigned to constants are not protected, so the following statement is executed without problems.</p>
+      <pre><code>const MY_OBJECT = {'key': 'value'};</code>
+  <code>MY_OBJECT.key = 'otherValue';</code></pre>
+    </section>
+    <section class="main-section" id="Data_Structures_and_Types">
+      <header>Data Structures and Types</header>
+      <h2>Data Types</h2>
+      <p>The latest ECMAScript standard defines seven data types:</p>
+      <ul>
+        <li>Six data types that are primitives:
+          <ul>
+            <li>Boolean. true and false.</li>
+            <li>null. A special keyword denoting a null value. Because JavaScript is case-sensitive, <code>null</code> is not the same as <code>Null</code>, <code>NULL</code>, or any other variant.</li>
+            <li>undefined. A top-level property whose value is undefined.</li>
+            <li>Number. 42 or 3.14159.</li>
+            <li>String. "Howdy"</li>
+            <li>Symbol (new in ECMAScript 2015). A data type whose instances are unique and immutable.</li>
+          </ul>
+        </li>
+        <li>and Object</li>
+      </ul>
+      <p>Although these data types are a relatively small amount, they enable you to perform useful functions with your applications. Objects and functions are the other fundamental elements in the language. You can think of objects as named containers for values, and functions as procedures that your application can perform.</p>
+      <h2>Data Type Conversion</h2>
+      <p>JavaScript is a dynamically typed language. That means you don't have to specify the data type of a variable when you declare it, and data types are converted automatically as needed during script execution. So, for example, you could define a variable as follows:</p>
+      <pre><code>var answer = 42;</code></pre>
+      <p>And later, you could assign the same variable a string value, for example:</p>
+      <pre><code>answer = 'Thanks for all the fish...';</code></pre>
+      <p>Because JavaScript is dynamically typed, this assignment does not cause an error message.</p>
+      <p>In expressions involving numeric and string values with the <code>+</code> operator, JavaScript converts numeric values to strings. For example, consider the following statements:</p>
+      <pre><code>x = 'The answer is ' + 42 // "The answer is 42"</code>
+  <code>y = 42 + ' is the answer' // "42 is the answer"</code></pre>
+      <p>In statements involving other operators, JavaScript does not convert numeric values to strings. For example:</p>
+      <pre><code>'37' - 7 // 30</code>
+  <code>'37' + 7 // "377"</code></pre>
+      <h2>Converting Strings to Numbers</h2>
+      <p>In the case that a value representing a number is in memory as a string, there are methods for conversion.</p>
+      <ul>
+        <li><code>parseInt()</code></li>
+        <li><code>parseFloat()</code></li>
+      </ul>
+      <p><code>parseInt</code> will only return whole numbers, so its use is diminished for decimals. Additionally, a best practice for <code>parseInt</code> is to always include the radix parameter. The radix parameter is used to specify which numerical system is to be used.</p>
+      <p>An alternative method of retrieving a number from a string is with the <code>+</code> (unary plus) operator:</p>
+      <pre><code>'1.1' + '1.1' = '1.11.1'</code>
+  <code>(+'1.1') + (+'1.1') = 2.2</code>
+  <code>// Note: the parentheses are added for clarity, not required.</code></pre>
+    </section>
+    <section class="main-section" id="Literals">
+      <header>Literals</header>
+      <p>You use literals to represent values in JavaScript. These are fixed values, not variables, that you literally provide in your script. This section describes the following types of literals:</p>
+      <ul>
+        <li>Array literals</li>
+        <li>Boolean literals</li>
+        <li>Floating-point literalsIntegers</li>
+        <li>Integers</li>
+        <li>Object literals</li>
+        <li>RegExp literals</li>
+        <li>String literals</li>
+      </ul>
+      <h2>Array Literals</h2>
+      <p>An array literal is a list of zero or more expressions, each of which represents an array element, enclosed in square brackets ([]). When you create an array using an array literal, it is initialized with the specified values as its elements, and its length is set to the number of arguments specified.</p>
+      <p>The following example creates the coffees array with three elements and a length of three:</p>
+      <pre><code>var coffees = ['French Roast', 'Colombian', 'Kona'];</code></pre>
+      <aside>An array literal is a type of object initializer. See Using Object Initializers.</aside>
+      <p>If an array is created using a literal in a top-level script, JavaScript interprets the array each time it evaluates the expression containing the array literal. In addition, a literal used in a function is created each time the function is called.</p>
+      <p>Array literals are also Array objects. See Array and Indexed collections for details on Array objects.</p>
+      <h3>Extra Commas in Array Literals</h3>
+      <p>You do not have to specify all elements in an array literal. If you put two commas in a row, the array is created with undefined for the unspecified elements. The following example creates the fish array:</p>
+      <pre><code>var fish = ['Lion', , 'Angel'];</code></pre>
+      <p>This array has two elements with values and one empty element (<code>fish[0]</code> is "Lion", <code>fish[1]</code> is <code>undefined</code>, and <code>fish[2]</code> is "Angel").</p>
+      <p>If you include a trailing comma at the end of the list of elements, the comma is ignored. In the following example, the length of the array is three. There is no <code>myList[3]</code>. All other commas in the list indicate a new element.</p>
+      <aside>Trailing commas can create errors in older browser versions and it is a best practice to remove them.</aside>
+      <pre><code>var myList = ['home', , 'school', ];</code></pre>
+      <p>In the following example, the length of the array is four, and <code>myList[0]</code> and <code>myList[2]</code> are missing.</p>
+      <pre><code>var myList = [ ,'home', , 'school'];</code></pre>
+      <p>In the following example, the length of the array is four, and <code>myList[1]</code> and <code>myList[3]</code> are missing. Only the last comma is ignored.</p>
+      <pre><code>var myList = ['home', , 'school', , ];</code></pre>
+      <p>Understanding the behavior of extra commas is important to understanding JavaScript as a language, however when writing your own code: explicitly declaring the missing elements as undefined will increase your code's clarity and maintainability.</p>
+      <h2>Boolean Literals</h2>
+      <p>The Boolean type has two literal values: <code>true</code> and <code>false</code>.</p>
+      <p>Do not confuse the primitive Boolean values <code>true</code> and <code>false</code> with the true and false values of the Boolean object. The Boolean object is a wrapper around the primitive Boolean data type. See Boolean for more information.</p>
+      <h2>Integers</h2>
+      <p>Integers can be expressed in decimal (base 10), hexadecimal (base 16), octal (base 8) and binary (base 2).</p>
+      <ul>
+        <li>Decimal integer literal consists of a sequence of digits without a leading 0 (zero).</li>
+        <li>Leading 0 (zero) on an integer literal, or leading 0o (or 0O) indicates it is in octal. Octal integers can include only the digits 0-7.</li>
+        <li>Leading 0x (or 0X) indicates hexadecimal. Hexadecimal integers can include digits (0-9) and the letters a-f and A-F.</li>
+        <li>Leading 0b (or 0B) indicates binary. Binary integers can include digits only 0 and 1.</li>
+      </ul>
+      <p>Some examples of integer literals are:</p>
+      <pre><code>0, 117 and -345 (decimal, base 10)</code>
+  <code>015, 0001 and -0o77 (octal, base 8)</code>
+  <code>0x1123, 0x00111 and -0xF1A7 (hexadecimal, "hex" or base 16)</code>
+  <code>0b11, 0b0011 and -0b11 (binary, base 2)</code></pre>
+      <p>For more information, see Numeric literals in the Lexical grammar reference.</p>
+      <h2>Floating-Point Literals</h2>
+      <p>A floating-point literal can have the following parts:</p>
+      <ul>
+        <li>A decimal integer which can be signed (preceded by "+" or "-"),</li>
+        <li>A decimal point ("."),</li>
+        <li>A fraction (another decimal number),</li>
+        <li>An exponent.</li>
+      </ul>
+      <p>The exponent part is an "e" or "E" followed by an integer, which can be signed (preceded by "+" or "-"). A floating-point literal must have at least one digit and either a decimal point or "e" (or "E").</p>
+      <p>More succinctly, the syntax is:</p>
+      <pre><code>[(+|-)][digits][.digits][(E|e)[(+|-)]digits]</code></pre>
+      <p>For example:</p>
+      <pre><code>3.1415926</code>
+  <code>-.123456789</code>
+  <code>-3.1E+12</code>
+  <code>.1e-23</code></pre>
+      <h2>Object Literals</h2>
+      <p>An object literal is a list of zero or more pairs of property names and associated values of an object, enclosed in curly braces ({}). You should not use an object literal at the beginning of a statement. This will lead to an error or not behave as you expect, because the { will be interpreted as the beginning of a block.</p>
+      <p>The following is an example of an object literal. The first element of the <code>car</code> object defines a property, <code>myCar</code>, and assigns to it a new string, "Saturn"; the second element, the <code>getCar</code> property, is immediately assigned the result of invoking the function (<code>carTypes("Honda")</code>); the third element, the <code>special</code> property, uses an existing variable (<code>sales</code>).</p>
+      <pre><code>var sales = 'Toyota';</code>
+  <code></code>
+  <code>function carTypes(name) {</code>
+  <code>if (name === 'Honda') {</code>
+  <code>return name;</code>
+  <code>} else {</code>
+  <code>return "Sorry, we don't sell " + name + ".";</code>
+  <code>}</code>
+  <code>}</code>
+  <code></code>
+  <code>var car = { myCar: 'Saturn', getCar: carTypes('Honda'), special: sales };</code>
+  <code></code>
+  <code>console.log(car.myCar);   // Saturn</code>
+  <code>console.log(car.getCar);  // Honda</code>
+  <code>console.log(car.special); // Toyota</code></pre>
+      <p>Additionally, you can use a numeric or string literal for the name of a property or nest an object inside another. The following example uses these options.</p>
+      <pre><code>var car = { manyCars: {a: 'Saab', 'b': 'Jeep'}, 7: 'Mazda' };</code>
+  <code></code>
+  <code>console.log(car.manyCars.b); // Jeep</code>
+  <code>console.log(car[7]); // Mazda</code></pre>
+      <p>Object property names can be any string, including the empty string. If the property name would not be a valid JavaScript identifier or number, it must be enclosed in quotes. Property names that are not valid identifiers also cannot be accessed as a dot (.) property, but can be accessed and set with the array-like notation("[]").</p>
+      <pre><code>var unusualPropertyNames = {</code>
+  <code>'': 'An empty string',</code>
+  <code>'!': 'Bang!'</code>
+  <code>}</code>
+  <code>console.log(unusualPropertyNames.'');   // SyntaxError: Unexpected string</code>
+  <code>console.log(unusualPropertyNames['']);  // An empty string</code>
+  <code>console.log(unusualPropertyNames.!);    // SyntaxError: Unexpected token !</code>
+  <code>console.log(unusualPropertyNames['!']); // Bang!</code></pre>
+      <p>In ES2015, object literals are extended to support setting the prototype at construction, shorthand for foo: foo assignments, defining methods, making super calls, and computing property names with expressions. Together, these also bring object literals and class declarations closer together, and let object-based design benefit from some of the same conveniences.</p>
+      <pre><code>var obj = {</code>
+  <code>// __proto__</code>
+  <code>__proto__: theProtoObj,</code>
+  <code>// Shorthand for ‘handler: handler’</code>
+  <code>handler,</code>
+  <code>// Methods</code>
+  <code>toString() {</code>
+  <code>// Super calls</code>
+  <code>return 'd ' + super.toString();</code>
+  <code>},</code>
+  <code>// Computed (dynamic) property names</code>
+  <code>[ 'prop_' + (() => 42)() ]: 42</code>
+  <code>};</code></pre>
+      <p>Please note:</p>
+      <pre><code>var foo = {a: 'alpha', 2: 'two'};</code>
+  <code>console.log(foo.a);    // alpha</code>
+  <code>console.log(foo[2]);   // two</code>
+  <code>//console.log(foo.2);  // Error: missing ) after argument list</code>
+  <code>//console.log(foo[a]); // Error: a is not defined</code>
+  <code>console.log(foo['a']); // alpha</code>
+  <code>console.log(foo['2']); // two</code></pre>
+      <h2>RegExp Literals</h2>
+      <p>A regex literal is a pattern enclosed between slashes. The following is an example of an regex literal.</p>
+      <pre><code>var re = /ab+c/;</code></pre>
+      <h2>String Literals</h2>
+      <p>A string literal is zero or more characters enclosed in double (<code>"</code>) or single (<code>'</code>) quotation marks. A string must be delimited by quotation marks of the same type; that is, either both single quotation marks or both double quotation marks. The following are examples of string literals:</p>
+      <pre><code>'foo'</code>
+  <code>"bar"</code>
+  <code>'1234'</code>
+  <code>'one line \n another line'</code>
+  <code>"John's cat"</code></pre>
+      <p>You can call any of the methods of the String object on a string literal value—JavaScript automatically converts the string literal to a temporary String object, calls the method, then discards the temporary String object. You can also use the <code>String.length</code> property with a string literal:</p>
+      <pre><code>console.log("John's cat".length)</code>
+  <code>// Will print the number of symbols in the string including whitespace.</code>
+  <code>// In this case, 10.</code></pre>
+      <p>In ES2015, template literals are also available. Template strings provide syntactic sugar for constructing strings. This is similar to string interpolation features in Perl, Python and more. Optionally, a tag can be added to allow the string construction to be customized, avoiding injection attacks or constructing higher level data structures from string contents.</p>
+      <pre><code>// Basic literal string creation</code>
+  <code>`In JavaScript '\n' is a line-feed.`</code>
+  <code></code>
+  <code>// Multiline strings</code>
+  <code>`In JavaScript template strings can run</code>
+  <code> over multiple lines, but double and single</code>
+  <code> quoted strings cannot.`</code>
+  <code></code>
+  <code>// String interpolation</code>
+  <code>var name = 'Bob', time = 'today';</code>
+  <code>`Hello ${name}, how are you ${time}?`</code>
+  <code></code>
+  <code>// Construct an HTTP request prefix is used to interpret the replacements and construction</code>
+  <code>POST`http://foo.org/bar?a=${a}&b=${b}</code>
+  <code>    Content-Type: application/json</code>
+  <code>    X-Credentials: ${credentials}</code>
+  <code>    { "foo": ${foo},</code>
+  <code>      "bar": ${bar}}`(myOnReadyStateChangeHandler);</code></pre>
+      <p>You should use string literals unless you specifically need to use a String object. See String for details on String objects.</p>
+      <h3>Using Special Characters in Strings</h3>
+      <p>In addition to ordinary characters, you can also include special characters in strings, as shown in the following example.</p>
+      <pre><code>'one line \n another line'</code></pre>
+      <p>The following table lists the special characters that you can use in JavaScript strings.</p>
+      <table>
+        <caption>Table: JavaScript special characters</caption>
+        <thead>
+          <tr>
+            <td>Character</td>
+            <td>Meaning</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>\0</td>
+            <td>Null byte</td>
+          </tr>
+          <tr>
+            <td>\b</td>
+            <td>Backspace</td>
+          </tr>
+          <tr>
+            <td>\f</td>
+            <td>Form feed</td>
+          </tr>
+          <tr>
+            <td>\n</td>
+            <td>New line</td>
+          </tr>
+          <tr>
+            <td>\r</td>
+            <td>Carriage return</td>
+          </tr>
+          <tr>
+            <td>\t</td>
+            <td>Tab</td>
+          </tr>
+          <tr>
+            <td>\v</td>
+            <td>Vertical tab</td>
+          </tr>
+          <tr>
+            <td>\'</td>
+            <td>Apostrophe or single quote</td>
+          </tr>
+          <tr>
+            <td>\"</td>
+            <td>Double quote</td>
+          </tr>
+          <tr>
+            <td>\\</td>
+            <td>Backslash character</td>
+          </tr>
+          <tr>
+            <td>\XXX</td>
+            <td>The character with the Latin-1 encoding specified by up to three octal digits XXX between 0 and 377. For example, \251 is the octal sequence for the copyright symbol.</td>
+          </tr>
+          <tr>
+            <td>\xXX</td>
+            <td>The character with the Latin-1 encoding specified by the two hexadecimal digits XX between 00 and FF. For example, \xA9 is the hexadecimal sequence for the copyright symbol.</td>
+          </tr>
+          <tr>
+            <td>\uXXXX</td>
+            <td>The Unicode character specified by the four hexadecimal digits XXXX. For example, \u00A9 is the Unicode sequence for the copyright symbol. See Unicode escape sequences.</td>
+          </tr>
+          <tr>
+            <td>\u{XXXXX}</td>
+            <td>Unicode code point escapes. For example, \u{2F804} is the same as the simple Unicode escapes \uD87E\uDC04.</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Escaping Characters</h3>
+      <p>For characters not listed in the table, a preceding backslash is ignored, but this usage is deprecated and should be avoided.</p>
+      <p>You can insert a quotation mark inside a string by preceding it with a backslash. This is known as escaping the quotation mark. For example:</p>
+      <pre><code>var quote = "He read \"The Cremation of Sam McGee\" by R.W. Service.";</code>
+  <code>console.log(quote);</code></pre>
+      <p>The result of this would be:</p>
+      <pre><code>He read "The Cremation of Sam McGee" by R.W. Service.</code></pre>
+      <p>To include a literal backslash inside a string, you must escape the backslash character. For example, to assign the file path c:\temp to a string, use the following:</p>
+      <pre><code>var home = 'c:\\temp';</code></pre>
+      <p>You can also escape line breaks by preceding them with backslash. The backslash and line break are both removed from the value of the string.</p>
+      <pre><code>var str = 'this string \</code>
+  <code>is broken \</code>
+  <code>across multiple \</code>
+  <code>lines.'</code>
+  <code>console.log(str);   // this string is broken across multiplelines.</code></pre>
+      <p>Although JavaScript does not have "heredoc" syntax, you can get close by adding a line break escape and an escaped line break at the end of each line:</p>
+      <pre><code>var poem = </code>
+  <code>'Roses are red,\n\</code>
+  <code>Violets are blue.\n\</code>
+  <code>Sugar is sweet,\n\</code>
+  <code>and so is foo.'</code></pre>
+    </section>
+    <section class="main-section" id="Reference">
+      <header>Reference</header>
+      <ul>
+        <li>All of the documentation on this page is taken from <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_Types" target="_blank">MDN</a></li>
+      </ul>
+    </section>
+  </main>
+  <footer>
+    <p>Coded by <a href="https://www.freecodecamp.org/elrolfe" target="_blank">Eric Rolfe</a>
+  </footer>
+  <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+</body>
+</html>
